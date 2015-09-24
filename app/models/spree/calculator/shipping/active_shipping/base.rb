@@ -22,8 +22,8 @@ module Spree
           is_package_shippable?(package)
 
           !compute(package).nil?
-        rescue Spree::ShippingError
-          false
+        #rescue Spree::ShippingError
+        #  false
         end
 
         def compute_package(package)
@@ -119,9 +119,9 @@ module Spree
             else
               message = e.message
             end
-
             error = Spree::ShippingError.new("#{I18n.t(:shipping_error)}: #{message}")
             Rails.cache.write @cache_key, error #write error to cache to prevent constant re-lookups
+            Rails.logger.error "Error Ao acessar API Correios: #{error}"
             raise error
           end
 
@@ -165,7 +165,7 @@ module Spree
             if max_weight <= 0 || item_weight < max_weight
               item_weight
             else
-              raise Spree::ShippingError.new("#{I18n.t(:shipping_error)}: The maximum per package weight for the selected service from the selected country is #{max_weight} ounces.")  
+              raise Spree::ShippingError.new("#{I18n.t(:shipping_error)}: The maximum per package weight for the selected service from the selected country is #{max_weight} ounces.")
             end
           end
           weights.flatten.compact.sort

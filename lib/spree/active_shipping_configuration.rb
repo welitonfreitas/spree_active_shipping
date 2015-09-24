@@ -16,6 +16,9 @@ class Spree::ActiveShippingConfiguration < Spree::Preferences::Configuration
 
   preference :canada_post_login, :string, :default => "canada_post_login"
 
+  preference :correios_company_id, :string, :default => ""
+  preference :correios_password, :string, :default => ""
+
   preference :units, :string, :default => "imperial"
   preference :unit_multiplier, :decimal, :default => 16 # 16 oz./lb - assumes variant weights are in lbs
   preference :default_weight, :integer, :default => 0 # 16 oz./lb - assumes variant weights are in lbs
